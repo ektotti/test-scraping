@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-bullseye AS base
+FROM php:7.4-fpm-bullseye AS base
 
 WORKDIR /data
 
@@ -12,7 +12,7 @@ ENV TZ=UTC \
   COMPOSER_ALLOW_SUPERUSER=1 \
   COMPOSER_HOME=/composer
 
-COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
 
 # install Node.js
 COPY --from=node:12-slim /usr/local/bin /usr/local/bin
@@ -63,6 +63,7 @@ RUN apt-get update \
     pdo_mysql \
     zip \
     bcmath \
+    sockets \
   && composer config -g process-timeout 3600 \
   && composer config -g repos.packagist composer https://packagist.org
 
